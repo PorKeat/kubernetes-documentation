@@ -1,0 +1,10 @@
+setup-masters:
+    echo "Create all the masters .... "
+    ansible-playbook playbooks/setup-master.yaml
+
+setup-workers:
+    echo "Create all the workers .... "
+    ansible-playbook playbooks/setup-worker.yaml
+
+setup-all: setup-masters setup-workers
+    echo "Create all masters and workers .... "

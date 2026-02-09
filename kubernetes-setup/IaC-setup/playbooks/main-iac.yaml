@@ -1,0 +1,11 @@
+--- 
+- name: Setting up infrastructure
+  hosts: master1 
+  become: true 
+  vars_files:
+    - ../vars/machines.yaml 
+  tasks: 
+    - name: Creating masters machines 
+      include_tasks: ./tasks/create-masters-task.yaml 
+    - name: Creating workers machines 
+      include_tasks: ./tasks/create-workers-task.yaml

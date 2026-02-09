@@ -1,0 +1,9 @@
+- name: Create masters
+  hosts: localhost
+  become: true 
+  vars_files:
+    - ../vars/machines.yaml 
+
+  tasks:
+    - name: Include master creation tasks
+      include_tasks: tasks/create-masters-task.yaml
