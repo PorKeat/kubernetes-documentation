@@ -12,15 +12,17 @@ spec:
       labels:
         app: {{ .Values.appName.app }}
     spec:
+      affinity: 
+        {{- toYaml .Values.affinity  | nindent 7 }}
       containers:
-      {{- with .Values.container }}
+    {{- with .Values.container }}
       - name: {{ .name }}
         image: {{ .image }}
         ports:
         - containerPort: {{ .port }}
-        env:
+        env: 
       {{- range .env }}
-          - name: {{ .name }}
-            value: {{ .value }}
-      {{- end }}
-      {{- end }}
+            - name: {{.name }}
+              value: {{.value}} 
+      {{- end  }}
+    {{- end }}

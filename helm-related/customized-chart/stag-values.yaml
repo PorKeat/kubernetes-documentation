@@ -12,6 +12,29 @@ container:
       value: pes-store-stag
     - name: POSTGRES_PASSWORD
       value: pes@stag
+affinity:   
+  podAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app
+                operator: In
+                values:
+                  - myapp
+          topologyKey: kubernetes.io/hostname
+
+  nodeaffinity:
+    requiredduringschedulingignoredduringexecution:
+      nodeselectorterms:
+        - matchexpressions:
+            - key: node-type
+              operator: in
+              values:
+                - production
+nodeSelector: 
+  kubernetes.io/hostname: node5
 resources:
   limits:
     memory: "128Mi"
