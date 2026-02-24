@@ -5,3 +5,14 @@ container:
   name: nginx-cont
   image: nginx:latest
   port: 80
+  env:
+    - name: POSTGRES_USER
+      value: pes-expo
+    - name: POSTGRES_DB
+      value: pes-store-stag
+    - name: POSTGRES_PASSWORD
+      value: pes@stag
+resources:
+  limits:
+    memory: "128Mi"
+    cpu: "500m"

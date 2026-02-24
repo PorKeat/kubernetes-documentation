@@ -1,7 +1,18 @@
 appName:
   app: nginx-prod
-replicas: 4
+replicas: 5
 container:
   name: nginx-cont
   image: nginx:latest
   port: 80
+  env:
+    - name: POSTGRES_USER
+      value: pes-expo
+    - name: POSTGRES_DB
+      value: pes-store-prod
+    - name: POSTGRES_PASSWORD
+      value: pes@prod
+resources:
+  limits:
+    memory: "128Mi"
+    cpu: "500m"

@@ -13,11 +13,14 @@ spec:
         app: {{ .Values.appName.app }}
     spec:
       containers:
-      - name: myapp
-        image: {{ .Values.container.image }}
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
+      {{- with .Values.container }}
+      - name: {{ .name }}
+        image: {{ .image }}
         ports:
-        - containerPort: {{ .Values.container.port }}
+        - containerPort: {{ .port }}
+        env:
+      {{- range .env }}
+          - name: {{ .name }}
+            value: {{ .value }}
+      {{- end }}
+      {{- end }}
