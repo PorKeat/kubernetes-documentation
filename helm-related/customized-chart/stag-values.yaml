@@ -1,0 +1,7 @@
+appName:
+  app: nginx-stag
+replicas: 1
+container:
+  name: nginx-cont
+  image: nginx:latest
+  port: 80
