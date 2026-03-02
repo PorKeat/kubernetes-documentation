@@ -1,6 +1,6 @@
 # Kubernetes Documentation
 
 > Author: Porkeat  
-> Last Updated: 2026-03-02 09:52:07 +07
+> Last Updated: 02 March 2026 - 09:52 AM
 
 ---
