@@ -7,6 +7,18 @@ if ! git rev-parse --git-dir > /dev/null 2>&1; then
     exit 1
 fi
 
+README_FILE="README.md"
+
+# Update Last Updated field in README.md
+if [ -f "$README_FILE" ]; then
+    LAST_COMMIT_DATE=$(date +'%Y-%m-%d %H:%M:%S')
+    
+    if grep -q "Last Updated:" "$README_FILE"; then
+        sed -i.bak "s|Last Updated:.*|Last Updated: $LAST_COMMIT_DATE|g" "$README_FILE"
+        rm -f "$README_FILE.bak"
+    fi
+fi
+
 git add .
 
 git commit -m "$COMMIT_MESSAGE"
