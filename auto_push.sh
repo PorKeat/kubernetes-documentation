@@ -1,4 +1,21 @@
 #!/bin/bash
+#
+# ------------------------------------------------------------
+# Auto Git Push Script
+# Author: Porkeat
+# Description:
+#   - Automatically updates "Last Updated" field in README.md
+#   - Uses Cambodia timezone (Asia/Phnom_Penh)
+#   - Commits all changes
+#   - Pushes to the current Git branch
+#
+# Usage:
+#   ./push.sh
+#   ./push.sh "Your custom commit message"
+#
+# Date Format Example:
+#   02 March 2026 - 10:15 AM
+# ------------------------------------------------------------
 
 # Use Cambodia timezone
 export TZ="Asia/Phnom_Penh"
