@@ -1,0 +1,15 @@
+apiVersion: v2
+name: microservices-helm
+description: Spring Boot Producer + Consumer Microservices
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+
+dependencies:
+  - name: producer
+    version: 0.1.0
+    repository: "file://charts/producer"
+
+  - name: consumer
+    version: 0.1.0
+    repository: "file://charts/consumer"

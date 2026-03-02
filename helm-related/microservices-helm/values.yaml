@@ -1,0 +1,8 @@
+# Global overrides for child charts
+# Values here take precedence over child chart defaults
+
+producer:
+  replicaCount: 2
+
+consumer:
+  replicaCount: 2
