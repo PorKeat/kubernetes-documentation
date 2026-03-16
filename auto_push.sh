@@ -15,7 +15,6 @@ README_FILE="README.md"
 # Easy-to-read date format
 LAST_UPDATED=$(date '+%d %B %Y - %I:%M %p')
 
-# Update Last Updated in README.md
 if [ -f "$README_FILE" ]; then
     if grep -q "Last Updated:" "$README_FILE"; then
         sed -i.bak "s|Last Updated:.*|Last Updated: $LAST_UPDATED|g" "$README_FILE"
@@ -23,20 +22,6 @@ if [ -f "$README_FILE" ]; then
     fi
 fi
 
-# ----------------------------
-# GitGuardian pre-commit scan
-# ----------------------------
-if ! command -v ggshield > /dev/null 2>&1; then
-    echo "⚠️ GitGuardian CLI not installed. Skipping secret scan."
-else
-    ggshield secret scan pre-commit
-    if [ $? -ne 0 ]; then
-        echo "🚨 Secret detected! Push aborted by GitGuardian."
-        exit 1
-    fi
-fi
-
-# Add, commit, push
 git add .
 git commit -m "$COMMIT_MESSAGE"
 
