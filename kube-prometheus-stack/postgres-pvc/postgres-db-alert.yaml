@@ -1,0 +1,68 @@
+# apiVersion: monitoring.coreos.com/v1
+# kind: PrometheusRule
+# metadata:
+#   name: postgres-db-size-alert
+#   namespace: default
+#   labels:
+#     release: monitor-stack-release
+# spec:
+#   groups:
+#     - name: postgres.db.rules
+#       rules:
+#         - alert: PostgresDBSizeExceeds100MB
+#           expr: pg_database_size_bytes{datname="mydb"} > 100 * 1024 * 1024
+#           for: 1m
+#           labels:
+#             severity: warning
+#             component: postgres
+#           annotations:
+#             summary: "Database mydb size exceeded 100 MB"
+#             description: >
+#               Database 'mydb' is using {{ $value | humanize1024 }} — above the 100 MB threshold.
+
+#         - alert: PostgresDBNearlyFull
+#           expr: pg_database_size_bytes{datname="mydb"} > 0.8 * 1024 * 1024 * 1024
+#           for: 2m
+#           labels:
+#             severity: critical
+#             component: postgres
+#           annotations:
+#             summary: "Database mydb is more than 80% of 1 GiB"
+#             description: >
+#               Database 'mydb' has used {{ $value | humanize1024 }}. Consider cleanup or resize.
+
+
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: postgres-pvc-demo
+  namespace: default
+  labels:
+    release: monitor-stack-release
+spec:
+  groups:
+    - name: postgres.db.rules
+      rules:
+        # Warning: Database > 100 MB
+        - alert: PostgresDBUsageExceeds100MB
+          expr: pg_database_size_bytes{datname="mydb"} > 100 * 1024 * 1024
+          for: 1m
+          labels:
+            severity: warning
+            component: postgres
+          annotations:
+            description: >
+              postgres-pvc-demo has used {{ $value | humanize1024 }} — above the 100 MB threshold.
+              Run VACUUM or expand the PVC before Postgres stops accepting writes.
+
+        # Critical: Database > 80% of 1 GiB
+        - alert: PostgresDBNearlyFull
+          expr: (pg_database_size_bytes{datname="mydb"} / (1 * 1024 * 1024 * 1024)) > 0.80
+          for: 2m
+          labels:
+            severity: critical
+            component: postgres
+          annotations:
+            description: >
+              postgres-pvc-demo has used {{ $value | humanizePercentage }} of capacity.
+              Run VACUUM or expand the PVC before Postgres stops accepting writes.
